@@ -58,4 +58,10 @@ fn it_passes_for_day_2() {
 
     // verification for part 1
     assert_eq!(aoc_2023::day_02::part_1(read_test_input(day, 1)).unwrap(), results[1]);
+
+    // demo for part 2 (data was reused)
+    assert_eq!(aoc_2023::day_02::part_2(read_test_input(day, 0)).unwrap(), results[2]);
+
+    // verification for part 2 (data was reused)
+    assert_eq!(aoc_2023::day_02::part_2(read_test_input(day, 1)).unwrap(), results[3]);
 }

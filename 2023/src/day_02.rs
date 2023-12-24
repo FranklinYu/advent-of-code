@@ -46,14 +46,24 @@ impl Game {
         }
     }
 
-    fn is_possible(&self) -> bool {
-        let mut min = Hand::default();
+    fn max(&self) -> Hand {
+        let mut result = Hand::default();
         for hand in &self.hands {
-            min.0 = cmp::max(min.0, hand.0);
-            min.1 = cmp::max(min.1, hand.1);
-            min.2 = cmp::max(min.2, hand.2);
+            result.0 = cmp::max(result.0, hand.0);
+            result.1 = cmp::max(result.1, hand.1);
+            result.2 = cmp::max(result.2, hand.2);
         }
-        min.0 <= 12 && min.1 <= 13 && min.2 <= 14
+        result
+    }
+
+    fn is_possible(&self) -> bool {
+        let max = self.max();
+        max.0 <= 12 && max.1 <= 13 && max.2 <= 14
+    }
+
+    fn power(&self) -> i32 {
+        let max = self.max();
+        max.0 * max.1 * max.2
     }
 }
 
@@ -65,6 +75,16 @@ pub fn part_1<B: io::BufRead>(input: io::Lines<B>) -> io::Result<String> {
         if game.is_possible() {
             sum += game.id;
         }
+    }
+    Ok(sum.to_string())
+}
+
+pub fn part_2<B: io::BufRead>(input: io::Lines<B>) -> io::Result<String> {
+    let banner_re = banner_regex();
+    let mut sum = 0;
+    for line in input {
+        let game = Game::parse(&banner_re, &line?);
+        sum += game.power();
     }
     Ok(sum.to_string())
 }
@@ -95,5 +115,13 @@ mod tests {
     fn it_makes_the_right_decision(line: &str) -> bool {
         let banner_re = super::banner_regex();
         super::Game::parse(&banner_re, line).is_possible()
+    }
+
+    #[test_case("Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green" => 4*2*6)]
+    #[test_case("Game 310: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red" => 20*13*6)]
+    #[test_case("Game 31: 8 green, 6 blue; 5 blue, 13 green; 5 green" => 0)]
+    fn it_gets_the_right_power(line: &str) -> i32 {
+        let banner_re = super::banner_regex();
+        super::Game::parse(&banner_re, line).power()
     }
 }
