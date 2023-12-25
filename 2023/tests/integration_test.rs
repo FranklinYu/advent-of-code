@@ -32,6 +32,7 @@ fn it_passes_for_day_1() {
     let results = read_expected_outputs(day)
         .collect::<io::Result<Vec<_>>>()
         .unwrap();
+
     // demo for part 1
     assert_eq!(
         aoc_2023::day_01::part_1(read_test_input(day, 0)).unwrap(),
@@ -86,5 +87,25 @@ fn it_passes_for_day_2() {
     assert_eq!(
         aoc_2023::day_02::part_2(read_test_input(day, 1)).unwrap(),
         results[3]
+    );
+}
+
+#[test]
+fn it_passes_for_day_7() {
+    let day = Day(7);
+    let results = read_expected_outputs(day)
+        .collect::<io::Result<Vec<_>>>()
+        .unwrap();
+
+    // demo for part 1
+    assert_eq!(
+        aoc_2023::day_07::part_1(read_test_input(day, 0)).unwrap(),
+        results[0]
+    );
+
+    // verification for part 1
+    assert_eq!(
+        aoc_2023::day_07::part_1(read_test_input(day, 1)).unwrap(),
+        results[1]
     );
 }
