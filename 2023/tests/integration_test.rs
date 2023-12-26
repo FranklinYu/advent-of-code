@@ -108,4 +108,16 @@ fn it_passes_for_day_7() {
         aoc_2023::day_07::part_1(read_test_input(day, 1)).unwrap(),
         results[1]
     );
+
+    // demo for part 2
+    assert_eq!(
+        aoc_2023::day_07::part_2(read_test_input(day, 0)).unwrap(),
+        results[2]
+    );
+
+    // verification for part 2
+    assert_eq!(
+        aoc_2023::day_07::part_2(read_test_input(day, 1)).unwrap(),
+        results[3]
+    );
 }
